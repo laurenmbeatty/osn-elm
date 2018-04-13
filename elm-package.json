@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "summary": "OSN North Elm Demo",
-    "repository": "https://github.com/laurenmbeatty/osn-elm",
+    "repository": "https://github.com/laurenmbeatty/osn-elm.git",
     "license": "BSD3",
     "source-directories": [
         "."

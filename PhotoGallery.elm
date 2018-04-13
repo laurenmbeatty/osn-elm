@@ -1,24 +1,18 @@
 module PhotoGallery exposing (..)
-
 import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+--import Html.Attributes exposing (..)
+--import Html.Events exposing (onClick)
 
-
+initialModel : { introText : String }
 initialModel =
+  {
+  introText = "hello"
+  }
 
+
+view: a -> Html msg
 view model =
-
-
--- viewSearchResult result =
---     li []
---         [ span [ class "star-count" ] [ text (toString result.stars) ]
---         , a [ href ("https://github.com/" ++ result.name), target "_blank" ]
---             [ text result.name ]
---         , button
---             [ class "hide-result" ]
---             [ text "X" ]
---         ]
+  h1 [] [text initialModel.introText]
 
 
 update msg model =
