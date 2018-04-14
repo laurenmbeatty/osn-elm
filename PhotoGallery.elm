@@ -27,6 +27,12 @@ initialModel =
       , likes = 5
       , photoUrl = "blah"
       }
+      ,
+      { userName = "Joe"
+      , likes = 10
+      , photoUrl = "doubleBlah"
+
+      }
     ]
   }
 
