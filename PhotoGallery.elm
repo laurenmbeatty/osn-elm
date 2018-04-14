@@ -1,7 +1,9 @@
 module PhotoGallery exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
---import Html.Events exposing (onClick)
+import Http
+import Json.Decode exposing (..)
+import Json.Decode.Pipeline exposing (..)
 
 -- MODEL
 
@@ -18,7 +20,12 @@ type alias SearchResult =
   }
 
 type Msg
-  = SetQuery String
+  = GetPhotos
+  | PhotosResult (Result Http.Error (List SearchResult))
+
+init : (Model, Cmd Msg)
+init =
+  ({ query = "json server", results = [] }, Cmd.none)
 
 initialModel : Model
 initialModel =
@@ -39,9 +46,22 @@ initialModel =
   }
 
  -- UPDATE
-update : Msg -> Model -> Model
+update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
-    model
+    --model
+    case msg of
+      GetPhotos ->
+        let
+          cmd =
+            Http.send PhotosResult <|
+              Http.get "https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOputclientidhere" decodePhotos
+        in
+          ( model, cmd )
+
+      PhotosResult (Ok results) ->
+        ({ model | results = results, query = ""}, Cmd.none)
+      PhotosResult (Err err) ->
+        ({model | results = [], query = (toString err) }, Cmd.none)
 
 -- VIEW
 view : Model -> Html Msg
@@ -68,11 +88,33 @@ viewSearchResult result =
         ]
   ]
 
+ -- HTTP
+-- getPhotos : Http.Request SearchResult
+-- getPhotos =
+--   Http.get "https://api.unsplash.com/photos/?page=2&per_page=24&client_id=Td1e55bf6704f4b99e93ae57786f434b354a42e5394d5aa34705720922c6cd652"
+
+photoResultDecoder : Json.Decode.Decoder SearchResult
+photoResultDecoder =
+  Json.Decode.Pipeline.decode SearchResult
+    |> Json.Decode.Pipeline.required "userName" (Json.Decode.string)
+    |> Json.Decode.Pipeline.required "likes" (Json.Decode.int)
+    |> Json.Decode.Pipeline.required "photoUrl" (Json.Decode.string)
+    |> Json.Decode.Pipeline.required "styleClass" (Json.Decode.string)
+
+decodePhotos : Json.Decode.Decoder (List SearchResult)
+decodePhotos =
+  Json.Decode.list photoResultDecoder
 
 main : Program Never Model Msg
 main =
-    Html.beginnerProgram
-        { view = view
+    Html.program
+        { init = init
         , update = update
-        , model = initialModel
+        , view = view
+        , subscriptions = subscriptions
         }
+
+-- SUBSCRIPTIONS
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.none
