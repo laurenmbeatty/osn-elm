@@ -14,6 +14,7 @@ type alias SearchResult =
   { userName : String
   , likes : Int
   , photoUrl : String
+  , styleClass: String
   }
 
 type Msg
@@ -25,13 +26,14 @@ initialModel =
   , results =
     [ { userName = "Lauren"
       , likes = 5
-      , photoUrl = "blah"
+      , photoUrl = "https://andybarefoot.com/codepen/images/albums/02.jpg"
+      , styleClass = "smallgrid odd"
       }
       ,
       { userName = "Joe"
       , likes = 10
-      , photoUrl = "doubleBlah"
-
+      , photoUrl = "https://andybarefoot.com/codepen/images/albums/02.jpg"
+      , styleClass = "smallgrid even"
       }
     ]
   }
@@ -44,26 +46,28 @@ update msg model =
 -- VIEW
 view : Model -> Html Msg
 view model =
-  div [ class "smallgrid even" ] (List.map viewSearchResult model.results)
-
-
+  div [ class "image-container"] (List.map viewSearchResult model.results)
 
 viewSearchResult : SearchResult -> Html Msg
 viewSearchResult result =
-  div [ class "description" ]
-    [ div [ class "text-holder" ]
-        [ h3 []
-            [ text "Photographer:" ]
-        , h2 []
-            [ text result.userName ]
-        , p []
-            [ text ("[Likes: " ++ (toString result.likes) ++ "]") ]
-        ]
-        ,
+  div [ class result.styleClass ]
+  [
+    div [ class "description" ]
+      [ div [ class "text-holder" ]
+          [ h3 []
+              [ text "Photographer:" ]
+          , h2 []
+              [ text result.userName ]
+          , p []
+              [ text ("[Likes: " ++ (toString result.likes) ++ "]") ]
+          ]
+      ]
+      ,
       div [ class "photo" ]
         [ img [ src result.photoUrl ] []
         ]
-    ]
+  ]
+
 
 main : Program Never Model Msg
 main =

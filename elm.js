@@ -8150,7 +8150,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = function (result) {
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('description'),
+			_0: _elm_lang$html$Html_Attributes$class(result.styleClass),
 			_1: {ctor: '[]'}
 		},
 		{
@@ -8159,49 +8159,60 @@ var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = function (result) {
 				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('text-holder'),
+					_0: _elm_lang$html$Html_Attributes$class('description'),
 					_1: {ctor: '[]'}
 				},
 				{
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$h3,
-						{ctor: '[]'},
+						_elm_lang$html$Html$div,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text('Photographer:'),
+							_0: _elm_lang$html$Html_Attributes$class('text-holder'),
 							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$h2,
-							{ctor: '[]'},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text(result.userName),
-								_1: {ctor: '[]'}
-							}),
-						_1: {
+						},
+						{
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$p,
+								_elm_lang$html$Html$h3,
 								{ctor: '[]'},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text(
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											'[Likes: ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(result.likes),
-												']'))),
+									_0: _elm_lang$html$Html$text('Photographer:'),
 									_1: {ctor: '[]'}
 								}),
-							_1: {ctor: '[]'}
-						}
-					}
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$h2,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(result.userName),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$p,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													'[Likes: ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(result.likes),
+														']'))),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}),
+					_1: {ctor: '[]'}
 				}),
 			_1: {
 				ctor: '::',
@@ -8233,7 +8244,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$view = function (model) {
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('smallgrid even'),
+			_0: _elm_lang$html$Html_Attributes$class('image-container'),
 			_1: {ctor: '[]'}
 		},
 		A2(_elm_lang$core$List$map, _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult, model.results));
@@ -8246,10 +8257,10 @@ var _laurenmbeatty$osn_elm$PhotoGallery$initialModel = {
 	query: 'blah',
 	results: {
 		ctor: '::',
-		_0: {userName: 'Lauren', likes: 5, photoUrl: 'blah'},
+		_0: {userName: 'Lauren', likes: 5, photoUrl: 'https://andybarefoot.com/codepen/images/albums/02.jpg', styleClass: 'smallgrid odd'},
 		_1: {
 			ctor: '::',
-			_0: {userName: 'Joe', likes: 10, photoUrl: 'doubleBlah'},
+			_0: {userName: 'Joe', likes: 10, photoUrl: 'https://andybarefoot.com/codepen/images/albums/02.jpg', styleClass: 'smallgrid even'},
 			_1: {ctor: '[]'}
 		}
 	}
@@ -8260,9 +8271,9 @@ var _laurenmbeatty$osn_elm$PhotoGallery$Model = F2(
 	function (a, b) {
 		return {query: a, results: b};
 	});
-var _laurenmbeatty$osn_elm$PhotoGallery$SearchResult = F3(
-	function (a, b, c) {
-		return {userName: a, likes: b, photoUrl: c};
+var _laurenmbeatty$osn_elm$PhotoGallery$SearchResult = F4(
+	function (a, b, c, d) {
+		return {userName: a, likes: b, photoUrl: c, styleClass: d};
 	});
 var _laurenmbeatty$osn_elm$PhotoGallery$SetQuery = function (a) {
 	return {ctor: 'SetQuery', _0: a};
