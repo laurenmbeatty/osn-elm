@@ -31,6 +31,7 @@ initialModel =
   }
 
  -- UPDATE
+update : Msg -> Model -> Model
 update msg model =
     model
 
@@ -38,7 +39,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
   div [ class "smallgrid even" ] (List.map viewSearchResult model.results)
-    
+
 
 
 viewSearchResult : SearchResult -> Html Msg
@@ -50,7 +51,7 @@ viewSearchResult result =
         , h2 []
             [ text result.userName ]
         , p []
-            [ text "[Likes: " ++ (toString result.likes) ++ "]" ]
+            [ text ("[Likes: " ++ (toString result.likes) ++ "]") ]
         ]
         ,
       div [ class "photo" ]
@@ -58,7 +59,7 @@ viewSearchResult result =
         ]
     ]
 
-
+main : Program Never Model Msg
 main =
     Html.beginnerProgram
         { view = view
