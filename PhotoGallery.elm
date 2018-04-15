@@ -12,12 +12,24 @@ type alias Model =
   , results : List SearchResult
   }
 
+-- type alias Photos =
+--     { photos : List SearchResult
+--     }
+
 type alias SearchResult =
-  { userName : String
-  , likes : Int
-  , photoUrl : String
-  , styleClass: String
+  { likes: Int
+  , user: PhotosUser
+  , urls : PhotosUrls
   }
+
+type alias PhotosUrls =
+  { small : String
+  , regular : String
+  , full : String
+  }
+
+type alias PhotosUser =
+  { username : String }
 
 type Msg
   = GetPhotos
@@ -27,23 +39,10 @@ init : (Model, Cmd Msg)
 init =
   ({ query = "json server", results = [] }, Cmd.none)
 
-initialModel : Model
-initialModel =
-  { query = "blah"
-  , results =
-    [ { userName = "Lauren"
-      , likes = 5
-      , photoUrl = "https://andybarefoot.com/codepen/images/albums/02.jpg"
-      , styleClass = "smallgrid odd"
-      }
-      ,
-      { userName = "Joe"
-      , likes = 10
-      , photoUrl = "https://andybarefoot.com/codepen/images/albums/02.jpg"
-      , styleClass = "smallgrid even"
-      }
-    ]
-  }
+-- initialModel : Model
+-- initialModel =
+--   Model
+
 
  -- UPDATE
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -54,14 +53,14 @@ update msg model =
         let
           cmd =
             Http.send PhotosResult <|
-              Http.get "https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOputclientidhere" decodePhotos
+              Http.get "https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOputclientidhere" decodePhotosList
         in
           ( model, cmd )
 
       PhotosResult (Ok results) ->
         ({ model | results = results, query = ""}, Cmd.none)
       PhotosResult (Err err) ->
-        ({model | results = [], query = (toString err) }, Cmd.none)
+        ({ model | results = [], query = (toString err) }, Cmd.none)
 
 -- VIEW
 view : Model -> Html Msg
@@ -70,40 +69,47 @@ view model =
 
 viewSearchResult : SearchResult -> Html Msg
 viewSearchResult result =
-  div [ class result.styleClass ]
+  div [ class "smallgrid odd" ]
   [
     div [ class "description" ]
       [ div [ class "text-holder" ]
           [ h3 []
               [ text "Photographer:" ]
           , h2 []
-              [ text result.userName ]
+              [ text result.user.username ]
           , p []
               [ text ("[Likes: " ++ (toString result.likes) ++ "]") ]
           ]
       ]
       ,
       div [ class "photo" ]
-        [ img [ src result.photoUrl ] []
+        [ img [ src (result.urls.small) ] []
         ]
   ]
 
- -- HTTP
--- getPhotos : Http.Request SearchResult
--- getPhotos =
---   Http.get "https://api.unsplash.com/photos/?page=2&per_page=24&client_id=Td1e55bf6704f4b99e93ae57786f434b354a42e5394d5aa34705720922c6cd652"
+decodePhotosList : Json.Decode.Decoder (List SearchResult)
+decodePhotosList =
+  Json.Decode.list decodePhoto
 
-photoResultDecoder : Json.Decode.Decoder SearchResult
-photoResultDecoder =
-  Json.Decode.Pipeline.decode SearchResult
-    |> Json.Decode.Pipeline.required "userName" (Json.Decode.string)
-    |> Json.Decode.Pipeline.required "likes" (Json.Decode.int)
-    |> Json.Decode.Pipeline.required "photoUrl" (Json.Decode.string)
-    |> Json.Decode.Pipeline.required "styleClass" (Json.Decode.string)
+decodePhotosUser : Json.Decode.Decoder PhotosUser
+decodePhotosUser =
+    Json.Decode.Pipeline.decode PhotosUser
+        |> Json.Decode.Pipeline.required "username" (Json.Decode.string)
 
-decodePhotos : Json.Decode.Decoder (List SearchResult)
-decodePhotos =
-  Json.Decode.list photoResultDecoder
+decodePhotosUrls : Json.Decode.Decoder PhotosUrls
+decodePhotosUrls =
+    Json.Decode.Pipeline.decode PhotosUrls
+        |> Json.Decode.Pipeline.required "small" (Json.Decode.string)
+        |> Json.Decode.Pipeline.required "regular" (Json.Decode.string)
+        |> Json.Decode.Pipeline.required "full" (Json.Decode.string)
+
+decodePhoto : Json.Decode.Decoder SearchResult
+decodePhoto =
+    Json.Decode.Pipeline.decode SearchResult
+        |> Json.Decode.Pipeline.required "likes" (Json.Decode.int)
+        |> Json.Decode.Pipeline.required "user" (decodePhotosUser)
+        |> Json.Decode.Pipeline.required "urls" (decodePhotosUrls)
+
 
 main : Program Never Model Msg
 main =
