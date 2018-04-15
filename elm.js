@@ -8637,6 +8637,121 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
 
+var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode$field, 'keyCode', _elm_lang$core$Json_Decode$int);
+var _elm_lang$html$Html_Events$targetChecked = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'checked',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$bool);
+var _elm_lang$html$Html_Events$targetValue = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'value',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _elm_lang$html$Html_Events$defaultOptions = _elm_lang$virtual_dom$VirtualDom$defaultOptions;
+var _elm_lang$html$Html_Events$onWithOptions = _elm_lang$virtual_dom$VirtualDom$onWithOptions;
+var _elm_lang$html$Html_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
+var _elm_lang$html$Html_Events$onFocus = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'focus',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onBlur = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'blur',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onSubmitOptions = _elm_lang$core$Native_Utils.update(
+	_elm_lang$html$Html_Events$defaultOptions,
+	{preventDefault: true});
+var _elm_lang$html$Html_Events$onSubmit = function (msg) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'submit',
+		_elm_lang$html$Html_Events$onSubmitOptions,
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onCheck = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'change',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetChecked));
+};
+var _elm_lang$html$Html_Events$onInput = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'input',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetValue));
+};
+var _elm_lang$html$Html_Events$onMouseOut = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseout',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseOver = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseover',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseLeave = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseleave',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseEnter = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseenter',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseUp = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseup',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseDown = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousedown',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onDoubleClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'dblclick',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'click',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$Options = F2(
+	function (a, b) {
+		return {stopPropagation: a, preventDefault: b};
+	});
+
 var _elm_lang$http$Native_Http = function() {
 
 
@@ -9006,7 +9121,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = function (result) {
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class(result.styleClass),
+			_0: _elm_lang$html$Html_Attributes$class('smallgrid odd'),
 			_1: {ctor: '[]'}
 		},
 		{
@@ -9044,7 +9159,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = function (result) {
 									{ctor: '[]'},
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html$text(result.userName),
+										_0: _elm_lang$html$Html$text(result.user.username),
 										_1: {ctor: '[]'}
 									}),
 								_1: {
@@ -9085,7 +9200,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = function (result) {
 							_elm_lang$html$Html$img,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$src(result.photoUrl),
+								_0: _elm_lang$html$Html_Attributes$src(result.urls.small),
 								_1: {ctor: '[]'}
 							},
 							{ctor: '[]'}),
@@ -9094,28 +9209,6 @@ var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = function (result) {
 				_1: {ctor: '[]'}
 			}
 		});
-};
-var _laurenmbeatty$osn_elm$PhotoGallery$view = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('image-container'),
-			_1: {ctor: '[]'}
-		},
-		A2(_elm_lang$core$List$map, _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult, model.results));
-};
-var _laurenmbeatty$osn_elm$PhotoGallery$initialModel = {
-	query: 'blah',
-	results: {
-		ctor: '::',
-		_0: {userName: 'Lauren', likes: 5, photoUrl: 'https://andybarefoot.com/codepen/images/albums/02.jpg', styleClass: 'smallgrid odd'},
-		_1: {
-			ctor: '::',
-			_0: {userName: 'Joe', likes: 10, photoUrl: 'https://andybarefoot.com/codepen/images/albums/02.jpg', styleClass: 'smallgrid even'},
-			_1: {ctor: '[]'}
-		}
-	}
 };
 var _laurenmbeatty$osn_elm$PhotoGallery$init = {
 	ctor: '_Tuple2',
@@ -9129,28 +9222,49 @@ var _laurenmbeatty$osn_elm$PhotoGallery$Model = F2(
 	function (a, b) {
 		return {query: a, results: b};
 	});
-var _laurenmbeatty$osn_elm$PhotoGallery$SearchResult = F4(
-	function (a, b, c, d) {
-		return {userName: a, likes: b, photoUrl: c, styleClass: d};
+var _laurenmbeatty$osn_elm$PhotoGallery$SearchResult = F3(
+	function (a, b, c) {
+		return {likes: a, user: b, urls: c};
 	});
-var _laurenmbeatty$osn_elm$PhotoGallery$photoResultDecoder = A3(
+var _laurenmbeatty$osn_elm$PhotoGallery$PhotosUrls = F3(
+	function (a, b, c) {
+		return {small: a, regular: b, full: c};
+	});
+var _laurenmbeatty$osn_elm$PhotoGallery$decodePhotosUrls = A3(
 	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-	'styleClass',
+	'full',
 	_elm_lang$core$Json_Decode$string,
 	A3(
 		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-		'photoUrl',
+		'regular',
 		_elm_lang$core$Json_Decode$string,
+		A3(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+			'small',
+			_elm_lang$core$Json_Decode$string,
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_laurenmbeatty$osn_elm$PhotoGallery$PhotosUrls))));
+var _laurenmbeatty$osn_elm$PhotoGallery$PhotosUser = function (a) {
+	return {username: a};
+};
+var _laurenmbeatty$osn_elm$PhotoGallery$decodePhotosUser = A3(
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+	'username',
+	_elm_lang$core$Json_Decode$string,
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_laurenmbeatty$osn_elm$PhotoGallery$PhotosUser));
+var _laurenmbeatty$osn_elm$PhotoGallery$decodePhoto = A3(
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+	'urls',
+	_laurenmbeatty$osn_elm$PhotoGallery$decodePhotosUrls,
+	A3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+		'user',
+		_laurenmbeatty$osn_elm$PhotoGallery$decodePhotosUser,
 		A3(
 			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
 			'likes',
 			_elm_lang$core$Json_Decode$int,
-			A3(
-				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-				'userName',
-				_elm_lang$core$Json_Decode$string,
-				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_laurenmbeatty$osn_elm$PhotoGallery$SearchResult)))));
-var _laurenmbeatty$osn_elm$PhotoGallery$decodePhotos = _elm_lang$core$Json_Decode$list(_laurenmbeatty$osn_elm$PhotoGallery$photoResultDecoder);
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_laurenmbeatty$osn_elm$PhotoGallery$SearchResult))));
+var _laurenmbeatty$osn_elm$PhotoGallery$decodePhotosList = _elm_lang$core$Json_Decode$list(_laurenmbeatty$osn_elm$PhotoGallery$decodePhoto);
 var _laurenmbeatty$osn_elm$PhotoGallery$PhotosResult = function (a) {
 	return {ctor: 'PhotosResult', _0: a};
 };
@@ -9161,7 +9275,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$update = F2(
 			var cmd = A2(
 				_elm_lang$http$Http$send,
 				_laurenmbeatty$osn_elm$PhotoGallery$PhotosResult,
-				A2(_elm_lang$http$Http$get, 'https://api.unsplash.com/photos/?page=2&per_page=24&client_id=Td1e55bf6704f4b99e93ae57786f434b354a42e5394d5aa34705720922c6cd652', _laurenmbeatty$osn_elm$PhotoGallery$decodePhotos));
+				A2(_elm_lang$http$Http$get, 'https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOputclientidhere', _laurenmbeatty$osn_elm$PhotoGallery$decodePhotosList));
 			return {ctor: '_Tuple2', _0: model, _1: cmd};
 		} else {
 			if (_p0._0.ctor === 'Ok') {
@@ -9186,9 +9300,45 @@ var _laurenmbeatty$osn_elm$PhotoGallery$update = F2(
 			}
 		}
 	});
+var _laurenmbeatty$osn_elm$PhotoGallery$GetPhotos = {ctor: 'GetPhotos'};
+var _laurenmbeatty$osn_elm$PhotoGallery$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('main-container'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$button,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Events$onClick(_laurenmbeatty$osn_elm$PhotoGallery$GetPhotos),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Get Photos'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('image-container'),
+						_1: {ctor: '[]'}
+					},
+					A2(_elm_lang$core$List$map, _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult, model.results)),
+				_1: {ctor: '[]'}
+			}
+		});
+};
 var _laurenmbeatty$osn_elm$PhotoGallery$main = _elm_lang$html$Html$program(
 	{init: _laurenmbeatty$osn_elm$PhotoGallery$init, update: _laurenmbeatty$osn_elm$PhotoGallery$update, view: _laurenmbeatty$osn_elm$PhotoGallery$view, subscriptions: _laurenmbeatty$osn_elm$PhotoGallery$subscriptions})();
-var _laurenmbeatty$osn_elm$PhotoGallery$GetPhotos = {ctor: 'GetPhotos'};
 
 var Elm = {};
 Elm['PhotoGallery'] = Elm['PhotoGallery'] || {};

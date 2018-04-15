@@ -4,6 +4,7 @@ import Html.Attributes exposing (..)
 import Http
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (..)
+import Html.Events exposing (onClick)
 
 -- MODEL
 
@@ -11,10 +12,6 @@ type alias Model =
   { query : String
   , results : List SearchResult
   }
-
--- type alias Photos =
---     { photos : List SearchResult
---     }
 
 type alias SearchResult =
   { likes: Int
@@ -47,7 +44,6 @@ init =
  -- UPDATE
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
-    --model
     case msg of
       GetPhotos ->
         let
@@ -65,7 +61,15 @@ update msg model =
 -- VIEW
 view : Model -> Html Msg
 view model =
+  div [class "main-container"]
+  [
+    button
+        [onClick GetPhotos]
+        [text "Get Photos"]
+  ,
   div [ class "image-container"] (List.map viewSearchResult model.results)
+  ]
+
 
 viewSearchResult : SearchResult -> Html Msg
 viewSearchResult result =
