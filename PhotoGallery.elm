@@ -1,21 +1,23 @@
 module PhotoGallery exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
+--import Array exposing (Array)
 import Http
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (..)
-import Html.Events exposing (onClick)
 
 -- MODEL
 
 type alias Model =
   { query : String
   , results : List SearchResult
+  , initialIndex : Int
   }
 
 type alias SearchResult =
-  { likes: Int
-  , user: PhotosUser
+  { likes : Int
+  , user : PhotosUser
   , urls : PhotosUrls
   }
 
@@ -34,7 +36,7 @@ type Msg
 
 init : (Model, Cmd Msg)
 init =
-  ({ query = "json server", results = [] }, Cmd.none)
+  ({ query = "json server", results = [], initialIndex = 0 }, Cmd.none)
 
 -- initialModel : Model
 -- initialModel =
@@ -73,7 +75,7 @@ view model =
 
 viewSearchResult : SearchResult -> Html Msg
 viewSearchResult result =
-  div [ class "smallgrid odd" ]
+  div [ classList [("smallgrid", True), ("odd", True), ("even", False)]]
   [
     div [ class "description" ]
       [ div [ class "text-holder" ]
@@ -90,6 +92,10 @@ viewSearchResult result =
         [ img [ src (result.urls.small) ] []
         ]
   ]
+
+plusOne : Int -> Int
+plusOne num =
+  num + 1
 
 decodePhotosList : Json.Decode.Decoder (List SearchResult)
 decodePhotosList =
