@@ -1,7 +1,7 @@
 module PhotoGallery exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+--import Html.Events exposing (onClick)
 --import Array exposing (Array)
 import Http
 import Json.Decode exposing (..)
@@ -31,12 +31,16 @@ type alias PhotosUser =
   { username : String }
 
 type Msg
-  = GetPhotos
-  | PhotosResult (Result Http.Error (List SearchResult))
+  = PhotosResult (Result Http.Error (List SearchResult))
+
+getPhotos : Cmd Msg
+getPhotos =
+    Http.send PhotosResult <|
+      Http.get "https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOClienIDHere" decodePhotosList
 
 init : (Model, Cmd Msg)
 init =
-  ({ query = "json server", results = [], initialIndex = 0 }, Cmd.none)
+  ({ query = "json server", results = [], initialIndex = 0 }, getPhotos)
 
 -- initialModel : Model
 -- initialModel =
@@ -47,14 +51,6 @@ init =
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
-      GetPhotos ->
-        let
-          cmd =
-            Http.send PhotosResult <|
-              Http.get "https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOputclientidhere" decodePhotosList
-        in
-          ( model, cmd )
-
       PhotosResult (Ok results) ->
         ({ model | results = results, query = ""}, Cmd.none)
       PhotosResult (Err err) ->
@@ -65,10 +61,6 @@ view : Model -> Html Msg
 view model =
   div [class "main-container"]
   [
-    button
-        [onClick GetPhotos]
-        [text "Get Photos"]
-  ,
   div [ class "image-container"] (List.map viewSearchResult model.results)
   ]
 
