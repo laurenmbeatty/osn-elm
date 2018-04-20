@@ -1,8 +1,6 @@
 module PhotoGallery exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
---import Html.Events exposing (onClick)
---import Array exposing (Array)
 import Http
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (..)
@@ -36,16 +34,11 @@ type Msg
 getPhotos : Cmd Msg
 getPhotos =
     Http.send PhotosResult <|
-      Http.get "https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOClienIDHere" decodePhotosList
+      Http.get "https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOClientIDhere" decodePhotosList
 
 init : (Model, Cmd Msg)
 init =
   ({ query = "json server", results = [], initialIndex = 0 }, getPhotos)
-
--- initialModel : Model
--- initialModel =
---   Model
-
 
  -- UPDATE
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -61,13 +54,13 @@ view : Model -> Html Msg
 view model =
   div [class "main-container"]
   [
-  div [ class "image-container"] (List.map viewSearchResult model.results)
+  div [ class "image-container"] (List.indexedMap viewSearchResult model.results)
   ]
 
 
-viewSearchResult : SearchResult -> Html Msg
-viewSearchResult result =
-  div [ classList [("smallgrid", True), ("odd", True), ("even", False)]]
+viewSearchResult : Int -> SearchResult -> Html Msg
+viewSearchResult index result =
+  div [ classList [("smallgrid", True), ("odd", ((index + 1) % 2 == 0)), ("even", ((index + 1) % 2 /= 0))]]
   [
     div [ class "description" ]
       [ div [ class "text-holder" ]

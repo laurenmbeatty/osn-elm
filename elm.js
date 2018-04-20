@@ -9004,113 +9004,126 @@ var _laurenmbeatty$osn_elm$PhotoGallery$subscriptions = function (model) {
 var _laurenmbeatty$osn_elm$PhotoGallery$plusOne = function (num) {
 	return num + 1;
 };
-var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = function (result) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$classList(
-				{
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: 'smallgrid', _1: true},
-					_1: {
+var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = F2(
+	function (index, result) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$classList(
+					{
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: 'odd', _1: true},
+						_0: {ctor: '_Tuple2', _0: 'smallgrid', _1: true},
 						_1: {
 							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'even', _1: false},
-							_1: {ctor: '[]'}
-						}
-					}
-				}),
-			_1: {ctor: '[]'}
-		},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$div,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('description'),
-					_1: {ctor: '[]'}
-				},
-				{
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$div,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('text-holder'),
-							_1: {ctor: '[]'}
-						},
-						{
-							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$h3,
-								{ctor: '[]'},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text('Photographer:'),
-									_1: {ctor: '[]'}
-								}),
+							_0: {
+								ctor: '_Tuple2',
+								_0: 'odd',
+								_1: _elm_lang$core$Native_Utils.eq(
+									A2(_elm_lang$core$Basics_ops['%'], index + 1, 2),
+									0)
+							},
 							_1: {
 								ctor: '::',
-								_0: A2(
-									_elm_lang$html$Html$h2,
-									{ctor: '[]'},
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html$text(result.user.username),
-										_1: {ctor: '[]'}
-									}),
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_elm_lang$html$Html$p,
-										{ctor: '[]'},
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html$text(
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													'[Likes: ',
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$core$Basics$toString(result.likes),
-														']'))),
-											_1: {ctor: '[]'}
-										}),
-									_1: {ctor: '[]'}
-								}
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'even',
+									_1: !_elm_lang$core$Native_Utils.eq(
+										A2(_elm_lang$core$Basics_ops['%'], index + 1, 2),
+										0)
+								},
+								_1: {ctor: '[]'}
 							}
-						}),
-					_1: {ctor: '[]'}
-				}),
-			_1: {
+						}
+					}),
+				_1: {ctor: '[]'}
+			},
+			{
 				ctor: '::',
 				_0: A2(
 					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('photo'),
+						_0: _elm_lang$html$Html_Attributes$class('description'),
 						_1: {ctor: '[]'}
 					},
 					{
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$img,
+							_elm_lang$html$Html$div,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$src(result.urls.small),
+								_0: _elm_lang$html$Html_Attributes$class('text-holder'),
 								_1: {ctor: '[]'}
 							},
-							{ctor: '[]'}),
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$h3,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Photographer:'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$h2,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(result.user.username),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$p,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text(
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														'[Likes: ',
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															_elm_lang$core$Basics$toString(result.likes),
+															']'))),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}
+							}),
 						_1: {ctor: '[]'}
 					}),
-				_1: {ctor: '[]'}
-			}
-		});
-};
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('photo'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$img,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$src(result.urls.small),
+									_1: {ctor: '[]'}
+								},
+								{ctor: '[]'}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
 var _laurenmbeatty$osn_elm$PhotoGallery$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -9128,7 +9141,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$view = function (model) {
 					_0: _elm_lang$html$Html_Attributes$class('image-container'),
 					_1: {ctor: '[]'}
 				},
-				A2(_elm_lang$core$List$map, _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult, model.results)),
+				A2(_elm_lang$core$List$indexedMap, _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult, model.results)),
 			_1: {ctor: '[]'}
 		});
 };
@@ -9209,7 +9222,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$PhotosResult = function (a) {
 var _laurenmbeatty$osn_elm$PhotoGallery$getPhotos = A2(
 	_elm_lang$http$Http$send,
 	_laurenmbeatty$osn_elm$PhotoGallery$PhotosResult,
-	A2(_elm_lang$http$Http$get, 'https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOClienIDHere', _laurenmbeatty$osn_elm$PhotoGallery$decodePhotosList));
+	A2(_elm_lang$http$Http$get, 'https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOClientIDhere', _laurenmbeatty$osn_elm$PhotoGallery$decodePhotosList));
 var _laurenmbeatty$osn_elm$PhotoGallery$init = {
 	ctor: '_Tuple2',
 	_0: {
