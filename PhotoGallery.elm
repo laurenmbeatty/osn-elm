@@ -34,7 +34,7 @@ type Msg
 getPhotos : Cmd Msg
 getPhotos =
     Http.send PhotosResult <|
-      Http.get "https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOClientIDhere" decodePhotosList
+      Http.get "https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOClientID" decodePhotosList
 
 init : (Model, Cmd Msg)
 init =
