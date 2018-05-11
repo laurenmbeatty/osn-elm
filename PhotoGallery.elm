@@ -1,6 +1,7 @@
 module PhotoGallery exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import Http
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (..)
@@ -8,15 +9,18 @@ import Json.Decode.Pipeline exposing (..)
 -- MODEL
 
 type alias Model =
-  { query : String
-  , results : List SearchResult
+  { results : List SearchResult
   , initialIndex : Int
+  , query : String
   }
 
 type alias SearchResult =
   { likes : Int
   , user : PhotosUser
   , urls : PhotosUrls
+  }
+type alias MainResult =
+  { results: List
   }
 
 type alias PhotosUrls =
@@ -30,20 +34,39 @@ type alias PhotosUser =
 
 type Msg
   = PhotosResult (Result Http.Error (List SearchResult))
+  | SetQuery String
+  | Search
 
-getPhotos : Cmd Msg
-getPhotos =
+type Error
+  = BadUrl String
+  | Timeout
+  | NetworkError
+  | BadStatus (Http.Response String)
+  | BadPayload String (Http.Response String)
+
+getPhotos : String -> Cmd Msg
+getPhotos query =
+  let
+    url =
+      "https://api.unsplash.com/search/photos?page=2&per_page=24&query="
+      ++ query
+      ++ "&client_id=TODOinsertAuthTokenHere"
+  in
     Http.send PhotosResult <|
-      Http.get "https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOClientID" decodePhotosList
+      Http.get url decodePhotosList
 
 init : (Model, Cmd Msg)
 init =
-  ({ query = "json server", results = [], initialIndex = 0 }, getPhotos)
+  ({ query = "Dogs", results = [], initialIndex = 0 }, (getPhotos "Dogs"))
 
  -- UPDATE
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
+      Search ->
+        ( model, getPhotos model.query )
+      SetQuery query ->
+        ({ model | query = query }, Cmd.none )
       PhotosResult (Ok results) ->
         ({ model | results = results, query = ""}, Cmd.none)
       PhotosResult (Err err) ->
@@ -54,7 +77,9 @@ view : Model -> Html Msg
 view model =
   div [class "main-container"]
   [
-  div [ class "image-container"] (List.indexedMap viewSearchResult model.results)
+    input [ class "search-query", onInput SetQuery, defaultValue model.query ] []
+  , button [ class "search-button", onClick Search ][ text "Search" ]
+  , div [ class "image-container"] (List.indexedMap viewSearchResult model.results)
   ]
 
 
@@ -78,13 +103,9 @@ viewSearchResult index result =
         ]
   ]
 
-plusOne : Int -> Int
-plusOne num =
-  num + 1
-
 decodePhotosList : Json.Decode.Decoder (List SearchResult)
 decodePhotosList =
-  Json.Decode.list decodePhoto
+    Json.Decode.at ["results"] (Json.Decode.list decodePhoto)
 
 decodePhotosUser : Json.Decode.Decoder PhotosUser
 decodePhotosUser =
@@ -104,7 +125,6 @@ decodePhoto =
         |> Json.Decode.Pipeline.required "likes" (Json.Decode.int)
         |> Json.Decode.Pipeline.required "user" (decodePhotosUser)
         |> Json.Decode.Pipeline.required "urls" (decodePhotosUrls)
-
 
 main : Program Never Model Msg
 main =
