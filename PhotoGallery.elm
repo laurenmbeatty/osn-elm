@@ -79,8 +79,10 @@ view : Model -> Html Msg
 view model =
   div [class "main-container"]
   [
-    input [ class "search-query", onInput SetQuery, defaultValue model.query ] []
-  , button [ class "search-button", onClick Search ][ text "Search" ]
+    div [class "search-container"] [
+      input [ class "search-input", onInput SetQuery, defaultValue model.query ] []
+    , button [ class "search-button", onClick Search ][ text "Search" ]
+    ]
   , div [ class "image-container"] (List.indexedMap viewSearchResult model.results)
   ]
 

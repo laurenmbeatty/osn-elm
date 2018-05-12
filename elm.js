@@ -9310,51 +9310,62 @@ var _laurenmbeatty$osn_elm$PhotoGallery$view = function (model) {
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$input,
+				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('search-query'),
+					_0: _elm_lang$html$Html_Attributes$class('search-container'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$input,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('search-input'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onInput(_laurenmbeatty$osn_elm$PhotoGallery$SetQuery),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$defaultValue(model.query),
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						{ctor: '[]'}),
 					_1: {
 						ctor: '::',
-						_0: _elm_lang$html$Html_Events$onInput(_laurenmbeatty$osn_elm$PhotoGallery$SetQuery),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$defaultValue(model.query),
-							_1: {ctor: '[]'}
-						}
+						_0: A2(
+							_elm_lang$html$Html$button,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('search-button'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Events$onClick(_laurenmbeatty$osn_elm$PhotoGallery$Search),
+									_1: {ctor: '[]'}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Search'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
 					}
-				},
-				{ctor: '[]'}),
+				}),
 			_1: {
 				ctor: '::',
 				_0: A2(
-					_elm_lang$html$Html$button,
+					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('search-button'),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Events$onClick(_laurenmbeatty$osn_elm$PhotoGallery$Search),
-							_1: {ctor: '[]'}
-						}
-					},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text('Search'),
+						_0: _elm_lang$html$Html_Attributes$class('image-container'),
 						_1: {ctor: '[]'}
-					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$div,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('image-container'),
-							_1: {ctor: '[]'}
-						},
-						A2(_elm_lang$core$List$indexedMap, _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult, model.results)),
-					_1: {ctor: '[]'}
-				}
+					},
+					A2(_elm_lang$core$List$indexedMap, _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult, model.results)),
+				_1: {ctor: '[]'}
 			}
 		});
 };
