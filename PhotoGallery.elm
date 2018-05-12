@@ -8,7 +8,6 @@ import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (..)
 
 -- MODEL
-
 type alias Model =
   { results : List SearchResult
   , initialIndex : Int
