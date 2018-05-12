@@ -21,10 +21,6 @@ type alias SearchResult =
   , urls : PhotosUrls
   }
 
-type alias MainResult =
-  { results: List
-  }
-
 type alias PhotosUrls =
   { small : String
   , regular : String
