@@ -13,6 +13,7 @@ type alias Model =
   { results : List SearchResult
   , initialIndex : Int
   , query : String
+  , errorMessage : Maybe String
   }
 
 type alias SearchResult =
@@ -20,7 +21,7 @@ type alias SearchResult =
   , user : PhotosUser
   , urls : PhotosUrls
   }
-  
+
 type alias MainResult =
   { results: List
   }
@@ -60,7 +61,7 @@ getPhotos query =
 
 init : (Model, Cmd Msg)
 init =
-  ({ query = "Dogs", results = [], initialIndex = 0 }, (getPhotos "Dogs"))
+  ({ query = "Dogs", results = [], initialIndex = 0, errorMessage = Nothing }, (getPhotos "Dogs"))
 
  -- UPDATE
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -73,20 +74,29 @@ update msg model =
       PhotosResult (Ok results) ->
         ({ model | results = results, query = ""}, Cmd.none)
       PhotosResult (Err err) ->
-        ({ model | results = [], query = (toString err) }, Cmd.none)
+        ({ model | results = [], errorMessage = Just "Oops, something went wrong." }, Cmd.none)
 
 -- VIEW
 view : Model -> Html Msg
 view model =
   div [class "main-container"]
   [
-    div [class "search-container"] [
+    div [class "search-container"]
+    [
       input [ class "search-input", onInput SetQuery, defaultValue model.query ] []
     , button [ class "search-button", onClick Search ][ text "Search" ]
     ]
+    , viewErrorMessage model.errorMessage
   , div [ class "image-container"] (List.indexedMap viewSearchResult model.results)
   ]
 
+viewErrorMessage : Maybe String -> Html Msg
+viewErrorMessage errorMessage =
+    case errorMessage of
+        Just message ->
+            h4 [ class "error-message" ] [ text message ]
+        Nothing ->
+            text ""
 
 viewSearchResult : Int -> SearchResult -> Html Msg
 viewSearchResult index result =

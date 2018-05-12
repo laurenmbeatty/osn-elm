@@ -9238,9 +9238,28 @@ var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = F2(
 				}
 			});
 	});
-var _laurenmbeatty$osn_elm$PhotoGallery$Model = F3(
-	function (a, b, c) {
-		return {results: a, initialIndex: b, query: c};
+var _laurenmbeatty$osn_elm$PhotoGallery$viewErrorMessage = function (errorMessage) {
+	var _p0 = errorMessage;
+	if (_p0.ctor === 'Just') {
+		return A2(
+			_elm_lang$html$Html$h4,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('error-message'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(_p0._0),
+				_1: {ctor: '[]'}
+			});
+	} else {
+		return _elm_lang$html$Html$text('');
+	}
+};
+var _laurenmbeatty$osn_elm$PhotoGallery$Model = F4(
+	function (a, b, c, d) {
+		return {results: a, initialIndex: b, query: c, errorMessage: d};
 	});
 var _laurenmbeatty$osn_elm$PhotoGallery$SearchResult = F3(
 	function (a, b, c) {
@@ -9357,15 +9376,19 @@ var _laurenmbeatty$osn_elm$PhotoGallery$view = function (model) {
 				}),
 			_1: {
 				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$div,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('image-container'),
-						_1: {ctor: '[]'}
-					},
-					A2(_elm_lang$core$List$indexedMap, _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult, model.results)),
-				_1: {ctor: '[]'}
+				_0: _laurenmbeatty$osn_elm$PhotoGallery$viewErrorMessage(model.errorMessage),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('image-container'),
+							_1: {ctor: '[]'}
+						},
+						A2(_elm_lang$core$List$indexedMap, _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult, model.results)),
+					_1: {ctor: '[]'}
+				}
 			}
 		});
 };
@@ -9390,14 +9413,15 @@ var _laurenmbeatty$osn_elm$PhotoGallery$init = {
 	_0: {
 		query: 'Dogs',
 		results: {ctor: '[]'},
-		initialIndex: 0
+		initialIndex: 0,
+		errorMessage: _elm_lang$core$Maybe$Nothing
 	},
 	_1: _laurenmbeatty$osn_elm$PhotoGallery$getPhotos('Dogs')
 };
 var _laurenmbeatty$osn_elm$PhotoGallery$update = F2(
 	function (msg, model) {
-		var _p0 = msg;
-		switch (_p0.ctor) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
 			case 'Search':
 				return {
 					ctor: '_Tuple2',
@@ -9409,16 +9433,16 @@ var _laurenmbeatty$osn_elm$PhotoGallery$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{query: _p0._0}),
+						{query: _p1._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				if (_p0._0.ctor === 'Ok') {
+				if (_p1._0.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{results: _p0._0._0, query: ''}),
+							{results: _p1._0._0, query: ''}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
@@ -9428,7 +9452,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$update = F2(
 							model,
 							{
 								results: {ctor: '[]'},
-								query: _elm_lang$core$Basics$toString(_p0._0._0)
+								errorMessage: _elm_lang$core$Maybe$Just('Oops, something went wrong.')
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
