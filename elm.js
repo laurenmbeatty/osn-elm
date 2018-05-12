@@ -9113,6 +9113,8 @@ var _elm_lang$http$Http$StringPart = F2(
 	});
 var _elm_lang$http$Http$stringPart = _elm_lang$http$Http$StringPart;
 
+var _laurenmbeatty$osn_elm$Auth$token = 'd1e55bf6704f4b99e93ae57786f434b354a42e5394d5aa34705720922c6cd652';
+
 var _laurenmbeatty$osn_elm$PhotoGallery$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
@@ -9363,7 +9365,10 @@ var _laurenmbeatty$osn_elm$PhotoGallery$getPhotos = function (query) {
 	var url = A2(
 		_elm_lang$core$Basics_ops['++'],
 		'https://api.unsplash.com/search/photos?page=2&per_page=24&query=',
-		A2(_elm_lang$core$Basics_ops['++'], query, '&client_id=d1e55bf6704f4b99e93ae57786f434b354a42e5394d5aa34705720922c6cd652'));
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			query,
+			A2(_elm_lang$core$Basics_ops['++'], '&client_id=', _laurenmbeatty$osn_elm$Auth$token)));
 	return A2(
 		_elm_lang$http$Http$send,
 		_laurenmbeatty$osn_elm$PhotoGallery$PhotosResult,
@@ -9421,14 +9426,6 @@ var _laurenmbeatty$osn_elm$PhotoGallery$update = F2(
 	});
 var _laurenmbeatty$osn_elm$PhotoGallery$main = _elm_lang$html$Html$program(
 	{init: _laurenmbeatty$osn_elm$PhotoGallery$init, update: _laurenmbeatty$osn_elm$PhotoGallery$update, view: _laurenmbeatty$osn_elm$PhotoGallery$view, subscriptions: _laurenmbeatty$osn_elm$PhotoGallery$subscriptions})();
-var _laurenmbeatty$osn_elm$PhotoGallery$searchFeed = function (query) {
-	var request = A2(_elm_lang$http$Http$get, query, _laurenmbeatty$osn_elm$PhotoGallery$decodePhotosList);
-	var url = A2(
-		_elm_lang$core$Basics_ops['++'],
-		'https://api.unsplash.com/search/photos?page=2&per_page=24&query=',
-		A2(_elm_lang$core$Basics_ops['++'], query, '&client_id=d1e55bf6704f4b99e93ae57786f434b354a42e5394d5aa34705720922c6cd652'));
-	return A2(_elm_lang$http$Http$send, _laurenmbeatty$osn_elm$PhotoGallery$PhotosResult, request);
-};
 var _laurenmbeatty$osn_elm$PhotoGallery$BadPayload = F2(
 	function (a, b) {
 		return {ctor: 'BadPayload', _0: a, _1: b};

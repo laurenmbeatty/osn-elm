@@ -3,6 +3,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Http
+import Auth
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (..)
 
@@ -50,7 +51,8 @@ getPhotos query =
     url =
       "https://api.unsplash.com/search/photos?page=2&per_page=24&query="
       ++ query
-      ++ "&client_id=TODOinsertAuthTokenHere"
+      ++ "&client_id="
+      ++ Auth.token
   in
     Http.send PhotosResult <|
       Http.get url decodePhotosList
