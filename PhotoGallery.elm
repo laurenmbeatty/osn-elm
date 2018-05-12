@@ -20,6 +20,7 @@ type alias SearchResult =
   , user : PhotosUser
   , urls : PhotosUrls
   }
+  
 type alias MainResult =
   { results: List
   }
