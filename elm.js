@@ -9265,9 +9265,6 @@ var _laurenmbeatty$osn_elm$PhotoGallery$SearchResult = F3(
 	function (a, b, c) {
 		return {likes: a, user: b, urls: c};
 	});
-var _laurenmbeatty$osn_elm$PhotoGallery$MainResult = function (a) {
-	return {results: a};
-};
 var _laurenmbeatty$osn_elm$PhotoGallery$PhotosUrls = F3(
 	function (a, b, c) {
 		return {small: a, regular: b, full: c};

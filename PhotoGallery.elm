@@ -42,18 +42,6 @@ type Error
   | BadStatus (Http.Response String)
   | BadPayload String (Http.Response String)
 
-getPhotos : String -> Cmd Msg
-getPhotos query =
-  let
-    url =
-      "https://api.unsplash.com/search/photos?page=2&per_page=24&query="
-      ++ query
-      ++ "&client_id="
-      ++ Auth.token
-  in
-    Http.send PhotosResult <|
-      Http.get url decodePhotosList
-
 init : (Model, Cmd Msg)
 init =
   ({ query = "Dogs", results = [], initialIndex = 0, errorMessage = Nothing }, (getPhotos "Dogs"))
@@ -71,6 +59,18 @@ update msg model =
       PhotosResult (Err err) ->
         ({ model | results = [], errorMessage = Just "Oops, something went wrong." }, Cmd.none)
 
+getPhotos : String -> Cmd Msg
+getPhotos query =
+  let
+    url =
+      "https://api.unsplash.com/search/photos?page=2&per_page=24&query="
+      ++ query
+      ++ "&client_id="
+      ++ Auth.token
+  in
+    Http.send PhotosResult <|
+      Http.get url decodePhotosList
+      
 -- VIEW
 view : Model -> Html Msg
 view model =
