@@ -1,4 +1,5 @@
 module PhotoGallery exposing (..)
+import Auth
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Http
@@ -34,7 +35,7 @@ type Msg
 getPhotos : Cmd Msg
 getPhotos =
     Http.send PhotosResult <|
-      Http.get "https://api.unsplash.com/photos/?page=2&per_page=24&client_id=TODOClientIDhere" decodePhotosList
+      Http.get ("https://api.unsplash.com/photos/?page=2&per_page=24&client_id=" ++ Auth.token) decodePhotosList
 
 init : (Model, Cmd Msg)
 init =
