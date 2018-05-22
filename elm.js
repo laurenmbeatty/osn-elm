@@ -9449,7 +9449,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$update = F2(
 							model,
 							{
 								results: {ctor: '[]'},
-								query: _elm_lang$core$Basics$toString(_p1._0._0)
+								errorMessage: _elm_lang$core$Maybe$Just('Oops, something went wrong!')
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};

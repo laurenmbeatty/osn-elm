@@ -44,7 +44,7 @@ update msg model =
       PhotosResult (Ok results) ->
         ({ model | results = results, query = ""}, Cmd.none)
       PhotosResult (Err err) ->
-        ({ model | results = [], query = (toString err) }, Cmd.none)
+        ({ model | results = [], errorMessage = Just "Oops, something went wrong." }, Cmd.none)
 
 getPhotos : String -> Cmd Msg
 getPhotos query =
