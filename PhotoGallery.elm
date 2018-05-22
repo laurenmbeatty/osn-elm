@@ -1,8 +1,9 @@
 module PhotoGallery exposing (..)
-import Auth
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import Http
+import Auth
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (..)
 
@@ -39,7 +40,7 @@ getPhotos =
 
 init : (Model, Cmd Msg)
 init =
-  ({ query = "json server", results = [], initialIndex = 0 }, getPhotos)
+  ({ query = "Dogs", results = [], initialIndex = 0 }, getPhotos)
 
  -- UPDATE
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -55,10 +56,23 @@ view : Model -> Html Msg
 view model =
   div [class "main-container"]
   [
-  div [ class "image-container"] (List.indexedMap viewSearchResult model.results)
+    div [class "search-container"]
+    [
+      input [ class "search-input", onInput SetQuery, defaultValue model.query ] []
+    , button [ class "search-button", onClick Search ][ text "Search" ]
+    ]
+    , viewErrorMessage model.errorMessage
+  , div [ class "image-container"] (List.indexedMap viewSearchResult model.results)
   ]
 
-
+viewErrorMessage : Maybe String -> Html Msg
+viewErrorMessage errorMessage =
+    case errorMessage of
+        Just message ->
+            h4 [ class "error-message" ] [ text message ]
+        Nothing ->
+            text ""
+            
 viewSearchResult : Int -> SearchResult -> Html Msg
 viewSearchResult index result =
   div [ classList [("smallgrid", True), ("odd", ((index + 1) % 2 == 0)), ("even", ((index + 1) % 2 /= 0))]]
@@ -78,10 +92,6 @@ viewSearchResult index result =
         [ img [ src (result.urls.small) ] []
         ]
   ]
-
-plusOne : Int -> Int
-plusOne num =
-  num + 1
 
 decodePhotosList : Json.Decode.Decoder (List SearchResult)
 decodePhotosList =
