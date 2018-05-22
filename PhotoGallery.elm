@@ -33,11 +33,6 @@ type alias PhotosUser =
 type Msg
   = PhotosResult (Result Http.Error (List SearchResult))
 
-getPhotos : Cmd Msg
-getPhotos =
-    Http.send PhotosResult <|
-      Http.get ("https://api.unsplash.com/photos/?page=2&per_page=24&client_id=" ++ Auth.token) decodePhotosList
-
 init : (Model, Cmd Msg)
 init =
   ({ query = "Dogs", results = [], initialIndex = 0 }, getPhotos)
@@ -50,6 +45,18 @@ update msg model =
         ({ model | results = results, query = ""}, Cmd.none)
       PhotosResult (Err err) ->
         ({ model | results = [], query = (toString err) }, Cmd.none)
+
+getPhotos : String -> Cmd Msg
+getPhotos query =
+  let
+    url =
+      "https://api.unsplash.com/search/photos?page=2&per_page=24&query="
+      ++ query
+      ++ "&client_id="
+      ++ Auth.token
+  in
+    Http.send PhotosResult <|
+      Http.get url decodePhotosList
 
 -- VIEW
 view : Model -> Html Msg
@@ -72,7 +79,7 @@ viewErrorMessage errorMessage =
             h4 [ class "error-message" ] [ text message ]
         Nothing ->
             text ""
-            
+
 viewSearchResult : Int -> SearchResult -> Html Msg
 viewSearchResult index result =
   div [ classList [("smallgrid", True), ("odd", ((index + 1) % 2 == 0)), ("even", ((index + 1) % 2 /= 0))]]
@@ -95,7 +102,7 @@ viewSearchResult index result =
 
 decodePhotosList : Json.Decode.Decoder (List SearchResult)
 decodePhotosList =
-  Json.Decode.list decodePhoto
+  Json.Decode.at ["results"] (Json.Decode.list decodePhoto)
 
 decodePhotosUser : Json.Decode.Decoder PhotosUser
 decodePhotosUser =
