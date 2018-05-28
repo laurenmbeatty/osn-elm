@@ -70,6 +70,17 @@ getPhotos query =
   in
     Http.send PhotosResult <|
       Http.get url decodePhotosList
+
+onEnter : Msg -> Attribute Msg
+onEnter msg =
+    let
+        isEnter code =
+            if code == 13 then
+                Json.Decode.succeed msg
+            else
+                Json.Decode.fail "not ENTER"
+    in
+        on "keydown" (Json.Decode.andThen isEnter keyCode)
       
 -- VIEW
 view : Model -> Html Msg
@@ -78,7 +89,7 @@ view model =
   [
     div [class "search-container"]
     [
-      input [ class "search-input", onInput SetQuery, defaultValue model.query ] []
+      input [ class "search-input", onInput SetQuery, defaultValue model.query, onEnter Search ] []
     , button [ class "search-button", onClick Search ][ text "Search" ]
     ]
     , viewErrorMessage model.errorMessage

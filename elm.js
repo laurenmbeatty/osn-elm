@@ -9257,6 +9257,15 @@ var _laurenmbeatty$osn_elm$PhotoGallery$viewErrorMessage = function (errorMessag
 		return _elm_lang$html$Html$text('');
 	}
 };
+var _laurenmbeatty$osn_elm$PhotoGallery$onEnter = function (msg) {
+	var isEnter = function (code) {
+		return _elm_lang$core$Native_Utils.eq(code, 13) ? _elm_lang$core$Json_Decode$succeed(msg) : _elm_lang$core$Json_Decode$fail('not ENTER');
+	};
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'keydown',
+		A2(_elm_lang$core$Json_Decode$andThen, isEnter, _elm_lang$html$Html_Events$keyCode));
+};
 var _laurenmbeatty$osn_elm$PhotoGallery$Model = F4(
 	function (a, b, c, d) {
 		return {results: a, initialIndex: b, query: c, errorMessage: d};
@@ -9345,7 +9354,11 @@ var _laurenmbeatty$osn_elm$PhotoGallery$view = function (model) {
 								_1: {
 									ctor: '::',
 									_0: _elm_lang$html$Html_Attributes$defaultValue(model.query),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: _laurenmbeatty$osn_elm$PhotoGallery$onEnter(_laurenmbeatty$osn_elm$PhotoGallery$Search),
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						},
