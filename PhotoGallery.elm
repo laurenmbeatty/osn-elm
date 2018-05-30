@@ -2,6 +2,7 @@ module PhotoGallery exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Css exposing (..)
 import Http
 import Auth
 import Json.Decode exposing (..)
