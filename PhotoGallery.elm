@@ -35,7 +35,7 @@ type Msg
 
 init : (Model, Cmd Msg)
 init =
-  ({ query = "Dogs", results = [], initialIndex = 0 }, getPhotos)
+  ({ query = "Dogs", results = [], initialIndex = 0 }, getPhotos "Dogs")
 
  -- UPDATE
 update : Msg -> Model -> (Model, Cmd Msg)
