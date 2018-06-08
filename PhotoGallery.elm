@@ -154,7 +154,7 @@ includeAltText : SearchResult -> String
 includeAltText result =
     case result.description of
         Nothing ->
-            "No description provided"
+            "Photo by " ++ result.user.username
 
         Just description ->
             description

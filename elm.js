@@ -9121,7 +9121,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$subscriptions = function (model) {
 var _laurenmbeatty$osn_elm$PhotoGallery$includeAltText = function (result) {
 	var _p0 = result.description;
 	if (_p0.ctor === 'Nothing') {
-		return 'No description provided';
+		return A2(_elm_lang$core$Basics_ops['++'], 'No description provided by  ', result.user.username);
 	} else {
 		return _p0._0;
 	}
