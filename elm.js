@@ -9118,6 +9118,14 @@ var _laurenmbeatty$osn_elm$Auth$token = 'd1e55bf6704f4b99e93ae57786f434b354a42e5
 var _laurenmbeatty$osn_elm$PhotoGallery$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
+var _laurenmbeatty$osn_elm$PhotoGallery$includeAltText = function (result) {
+	var _p0 = result.description;
+	if (_p0.ctor === 'Nothing') {
+		return 'No alt text provided';
+	} else {
+		return _p0._0;
+	}
+};
 var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = F2(
 	function (index, result) {
 		return A2(
@@ -9229,7 +9237,12 @@ var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = F2(
 								{
 									ctor: '::',
 									_0: _elm_lang$html$Html_Attributes$src(result.urls.small),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$alt(
+											_laurenmbeatty$osn_elm$PhotoGallery$includeAltText(result)),
+										_1: {ctor: '[]'}
+									}
 								},
 								{ctor: '[]'}),
 							_1: {ctor: '[]'}
@@ -9239,8 +9252,8 @@ var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = F2(
 			});
 	});
 var _laurenmbeatty$osn_elm$PhotoGallery$viewErrorMessage = function (errorMessage) {
-	var _p0 = errorMessage;
-	if (_p0.ctor === 'Just') {
+	var _p1 = errorMessage;
+	if (_p1.ctor === 'Just') {
 		return A2(
 			_elm_lang$html$Html$h4,
 			{
@@ -9250,7 +9263,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$viewErrorMessage = function (errorMessag
 			},
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html$text(_p0._0),
+				_0: _elm_lang$html$Html$text(_p1._0),
 				_1: {ctor: '[]'}
 			});
 	} else {
@@ -9270,9 +9283,9 @@ var _laurenmbeatty$osn_elm$PhotoGallery$Model = F4(
 	function (a, b, c, d) {
 		return {results: a, initialIndex: b, query: c, errorMessage: d};
 	});
-var _laurenmbeatty$osn_elm$PhotoGallery$SearchResult = F3(
-	function (a, b, c) {
-		return {likes: a, user: b, urls: c};
+var _laurenmbeatty$osn_elm$PhotoGallery$SearchResult = F4(
+	function (a, b, c, d) {
+		return {likes: a, description: b, user: c, urls: d};
 	});
 var _laurenmbeatty$osn_elm$PhotoGallery$PhotosUrls = F3(
 	function (a, b, c) {
@@ -9307,11 +9320,16 @@ var _laurenmbeatty$osn_elm$PhotoGallery$decodePhoto = A3(
 		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
 		'user',
 		_laurenmbeatty$osn_elm$PhotoGallery$decodePhotosUser,
-		A3(
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-			'likes',
-			_elm_lang$core$Json_Decode$int,
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_laurenmbeatty$osn_elm$PhotoGallery$SearchResult))));
+		A4(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+			'description',
+			A2(_elm_lang$core$Json_Decode$map, _elm_lang$core$Maybe$Just, _elm_lang$core$Json_Decode$string),
+			_elm_lang$core$Maybe$Nothing,
+			A3(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+				'likes',
+				_elm_lang$core$Json_Decode$int,
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_laurenmbeatty$osn_elm$PhotoGallery$SearchResult)))));
 var _laurenmbeatty$osn_elm$PhotoGallery$decodePhotosList = A2(
 	_elm_lang$core$Json_Decode$at,
 	{
@@ -9430,8 +9448,8 @@ var _laurenmbeatty$osn_elm$PhotoGallery$init = {
 };
 var _laurenmbeatty$osn_elm$PhotoGallery$update = F2(
 	function (msg, model) {
-		var _p1 = msg;
-		switch (_p1.ctor) {
+		var _p2 = msg;
+		switch (_p2.ctor) {
 			case 'Search':
 				return {
 					ctor: '_Tuple2',
@@ -9443,16 +9461,16 @@ var _laurenmbeatty$osn_elm$PhotoGallery$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{query: _p1._0}),
+						{query: _p2._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				if (_p1._0.ctor === 'Ok') {
+				if (_p2._0.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{results: _p1._0._0, query: ''}),
+							{results: _p2._0._0, query: ''}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
