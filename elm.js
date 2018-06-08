@@ -9121,7 +9121,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$subscriptions = function (model) {
 var _laurenmbeatty$osn_elm$PhotoGallery$includeAltText = function (result) {
 	var _p0 = result.description;
 	if (_p0.ctor === 'Nothing') {
-		return 'No alt text provided';
+		return 'No description provided';
 	} else {
 		return _p0._0;
 	}
@@ -9353,44 +9353,36 @@ var _laurenmbeatty$osn_elm$PhotoGallery$view = function (model) {
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$div,
+				_elm_lang$html$Html$h1,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('search-container'),
+					_0: _elm_lang$html$Html_Attributes$class('visually-hidden'),
 					_1: {ctor: '[]'}
 				},
 				{
 					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$input,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('search-input'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$html$Html_Events$onInput(_laurenmbeatty$osn_elm$PhotoGallery$SetQuery),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$defaultValue(model.query),
-									_1: {
-										ctor: '::',
-										_0: _laurenmbeatty$osn_elm$PhotoGallery$onEnter(_laurenmbeatty$osn_elm$PhotoGallery$Search),
-										_1: {ctor: '[]'}
-									}
-								}
-							}
-						},
-						{ctor: '[]'}),
-					_1: {
+					_0: _elm_lang$html$Html$text('Elm Demo with Unsplash API'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('search-container'),
+						_1: {ctor: '[]'}
+					},
+					{
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$button,
+							_elm_lang$html$Html$label,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('search-button'),
+								_0: _elm_lang$html$Html_Attributes$for('search'),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Events$onClick(_laurenmbeatty$osn_elm$PhotoGallery$Search),
+									_0: _elm_lang$html$Html_Attributes$class('visually-hidden'),
 									_1: {ctor: '[]'}
 								}
 							},
@@ -9399,23 +9391,69 @@ var _laurenmbeatty$osn_elm$PhotoGallery$view = function (model) {
 								_0: _elm_lang$html$Html$text('Search'),
 								_1: {ctor: '[]'}
 							}),
-						_1: {ctor: '[]'}
-					}
-				}),
-			_1: {
-				ctor: '::',
-				_0: _laurenmbeatty$osn_elm$PhotoGallery$viewErrorMessage(model.errorMessage),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$input,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('search-input'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$id('search'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onInput(_laurenmbeatty$osn_elm$PhotoGallery$SetQuery),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$defaultValue(model.query),
+												_1: {
+													ctor: '::',
+													_0: _laurenmbeatty$osn_elm$PhotoGallery$onEnter(_laurenmbeatty$osn_elm$PhotoGallery$Search),
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								},
+								{ctor: '[]'}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$button,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('search-button'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(_laurenmbeatty$osn_elm$PhotoGallery$Search),
+											_1: {ctor: '[]'}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Search'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					}),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$div,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('image-container'),
-							_1: {ctor: '[]'}
-						},
-						A2(_elm_lang$core$List$indexedMap, _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult, model.results)),
-					_1: {ctor: '[]'}
+					_0: _laurenmbeatty$osn_elm$PhotoGallery$viewErrorMessage(model.errorMessage),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('image-container'),
+								_1: {ctor: '[]'}
+							},
+							A2(_elm_lang$core$List$indexedMap, _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult, model.results)),
+						_1: {ctor: '[]'}
+					}
 				}
 			}
 		});

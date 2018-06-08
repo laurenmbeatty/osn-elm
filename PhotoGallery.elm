@@ -110,8 +110,10 @@ onEnter msg =
 view : Model -> Html Msg
 view model =
     div [ class "main-container" ]
-        [ div [ class "search-container" ]
-            [ input [ class "search-input", onInput SetQuery, defaultValue model.query, onEnter Search ] []
+        [ h1 [ class "visually-hidden" ] [ text "Elm Demo with Unsplash API" ]
+        , div [ class "search-container" ]
+            [ label [ for "search", class "visually-hidden" ] [ text "Search" ]
+            , input [ class "search-input", id "search", onInput SetQuery, defaultValue model.query, onEnter Search ] []
             , button [ class "search-button", onClick Search ] [ text "Search" ]
             ]
         , viewErrorMessage model.errorMessage
