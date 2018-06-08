@@ -152,7 +152,7 @@ includeAltText : SearchResult -> String
 includeAltText result =
     case result.description of
         Nothing ->
-            "No alt text provided"
+            "No description provided"
 
         Just description ->
             description
