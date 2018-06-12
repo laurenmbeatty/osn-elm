@@ -9181,7 +9181,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = F2(
 							{
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$h3,
+									_elm_lang$html$Html$h2,
 									{ctor: '[]'},
 									{
 										ctor: '::',
@@ -9191,7 +9191,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult = F2(
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_elm_lang$html$Html$h2,
+										_elm_lang$html$Html$h3,
 										{ctor: '[]'},
 										{
 											ctor: '::',

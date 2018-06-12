@@ -11,7 +11,7 @@ h3 {
   font-family: "Montserrat", sans-serif;
 }
 
-h2 {
+h3 {
   font-size: 1.6em;
   margin: 0 30px 5px 30px;
   text-transform: uppercase;
@@ -19,7 +19,7 @@ h2 {
   max-width: 200px;
 }
 
-h3 {
+h2 {
   font-size: 0.9em;
   margin: 0 30px 5px 30px;
   text-transform: uppercase;
