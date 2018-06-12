@@ -118,6 +118,9 @@ view model =
             ]
         , viewErrorMessage model.errorMessage
         , div [ class "image-container" ] (List.indexedMap viewSearchResult model.results)
+        , div [ class "credit " ]
+            [ a [ href "https://codepen.io/andybarefoot/pen/GMyREX", target "_blank" ] [ text "design by @andybarefoot" ]
+            ]
         ]
 
 

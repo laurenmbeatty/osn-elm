@@ -9121,7 +9121,7 @@ var _laurenmbeatty$osn_elm$PhotoGallery$subscriptions = function (model) {
 var _laurenmbeatty$osn_elm$PhotoGallery$includeAltText = function (result) {
 	var _p0 = result.description;
 	if (_p0.ctor === 'Nothing') {
-		return A2(_elm_lang$core$Basics_ops['++'], 'No description provided by  ', result.user.username);
+		return A2(_elm_lang$core$Basics_ops['++'], 'Photo by ', result.user.username);
 	} else {
 		return _p0._0;
 	}
@@ -9452,7 +9452,37 @@ var _laurenmbeatty$osn_elm$PhotoGallery$view = function (model) {
 								_1: {ctor: '[]'}
 							},
 							A2(_elm_lang$core$List$indexedMap, _laurenmbeatty$osn_elm$PhotoGallery$viewSearchResult, model.results)),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('credit '),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$a,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$href('https://codepen.io/andybarefoot/pen/GMyREX'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$target('_blank'),
+												_1: {ctor: '[]'}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('design by @andybarefoot'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}
