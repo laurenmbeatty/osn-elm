@@ -1,12 +1,14 @@
-module PhotoGallery exposing (..)
+module PhotoGallery exposing (Error(..), Model, Msg(..), PhotosUrls, PhotosUser, SearchResult, decodePhoto, decodePhotosList, decodePhotosUrls, decodePhotosUser, getPhotos, includeAltText, init, main, onEnter, subscriptions, update, view, viewErrorMessage, viewSearchResult)
 
+import Auth
+import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Http
-import Auth
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (..)
+
 
 
 -- MODEL
@@ -53,9 +55,9 @@ type Error
     | BadPayload String (Http.Response String)
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( { query = "Dogs", results = [], initialIndex = 0, errorMessage = Nothing }, (getPhotos "Dogs") )
+init : () -> ( Model, Cmd Msg )
+init _ =
+    ( { query = "Dogs", results = [], initialIndex = 0, errorMessage = Nothing }, getPhotos "Dogs" )
 
 
 
@@ -87,8 +89,8 @@ getPhotos query =
                 ++ "&client_id="
                 ++ Auth.token
     in
-        Http.send PhotosResult <|
-            Http.get url decodePhotosList
+    Http.send PhotosResult <|
+        Http.get url decodePhotosList
 
 
 onEnter : Msg -> Attribute Msg
@@ -97,10 +99,11 @@ onEnter msg =
         isEnter code =
             if code == 13 then
                 Json.Decode.succeed msg
+
             else
                 Json.Decode.fail "not ENTER"
     in
-        on "keydown" (Json.Decode.andThen isEnter keyCode)
+    on "keydown" (Json.Decode.andThen isEnter keyCode)
 
 
 
@@ -113,7 +116,7 @@ view model =
         [ h1 [ class "visually-hidden" ] [ text "Elm Demo with Unsplash API" ]
         , div [ class "search-container" ]
             [ label [ for "search", class "visually-hidden" ] [ text "Search" ]
-            , input [ class "search-input", id "search", onInput SetQuery, defaultValue model.query, onEnter Search ] []
+            , input [ class "search-input", id "search", onInput SetQuery, onEnter Search ] []
             , button [ class "search-button", onClick Search ] [ text "Search" ]
             ]
         , viewErrorMessage model.errorMessage
@@ -136,7 +139,7 @@ viewErrorMessage errorMessage =
 
 viewSearchResult : Int -> SearchResult -> Html Msg
 viewSearchResult index result =
-    div [ classList [ ( "smallgrid", True ), ( "odd", ((index + 1) % 2 == 0) ), ( "even", ((index + 1) % 2 /= 0) ) ] ]
+    div [ classList [ ( "smallgrid", True ), ( "odd", remainderBy 2 (index + 1) == 0 ), ( "even", remainderBy 2 (index + 1) /= 0 ) ] ]
         [ div [ class "description" ]
             [ div [ class "text-holder" ]
                 [ h2 []
@@ -144,11 +147,11 @@ viewSearchResult index result =
                 , h3 []
                     [ text result.user.username ]
                 , p []
-                    [ text ("[Likes: " ++ (toString result.likes) ++ "]") ]
+                    [ text ("[Likes: " ++ String.fromInt result.likes ++ "]") ]
                 ]
             ]
         , div [ class "photo" ]
-            [ img [ src (result.urls.small), alt (includeAltText result) ] []
+            [ img [ src result.urls.small, alt (includeAltText result) ] []
             ]
         ]
 
@@ -170,34 +173,34 @@ decodePhotosList =
 
 decodePhotosUser : Json.Decode.Decoder PhotosUser
 decodePhotosUser =
-    Json.Decode.Pipeline.decode PhotosUser
-        |> Json.Decode.Pipeline.required "username" (Json.Decode.string)
+    Json.Decode.succeed PhotosUser
+        |> Json.Decode.Pipeline.required "username" Json.Decode.string
 
 
 decodePhotosUrls : Json.Decode.Decoder PhotosUrls
 decodePhotosUrls =
-    Json.Decode.Pipeline.decode PhotosUrls
-        |> Json.Decode.Pipeline.required "small" (Json.Decode.string)
-        |> Json.Decode.Pipeline.required "regular" (Json.Decode.string)
-        |> Json.Decode.Pipeline.required "full" (Json.Decode.string)
+    Json.Decode.succeed PhotosUrls
+        |> Json.Decode.Pipeline.required "small" Json.Decode.string
+        |> Json.Decode.Pipeline.required "regular" Json.Decode.string
+        |> Json.Decode.Pipeline.required "full" Json.Decode.string
 
 
 decodePhoto : Json.Decode.Decoder SearchResult
 decodePhoto =
-    Json.Decode.Pipeline.decode SearchResult
-        |> Json.Decode.Pipeline.required "likes" (Json.Decode.int)
+    Json.Decode.succeed SearchResult
+        |> Json.Decode.Pipeline.required "likes" Json.Decode.int
         |> Json.Decode.Pipeline.optional "description" (Json.Decode.map Just string) Nothing
-        |> Json.Decode.Pipeline.required "user" (decodePhotosUser)
-        |> Json.Decode.Pipeline.required "urls" (decodePhotosUrls)
+        |> Json.Decode.Pipeline.required "user" decodePhotosUser
+        |> Json.Decode.Pipeline.required "urls" decodePhotosUrls
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    Html.program
+    Browser.element
         { init = init
         , update = update
-        , view = view
         , subscriptions = subscriptions
+        , view = view
         }
 
 
