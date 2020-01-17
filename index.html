@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>PhotoGallery</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" type="image/png" href="/elm-hub.png">
 </head>
 
 <body>
@@ -734,8 +735,8 @@ function _Debug_crash(identifier, fact1, fact2, fact3, fact4)
 			throw new Error('Browser.application programs cannot handle URLs like this:\n\n    ' + document.location.href + '\n\nWhat is the root? The root of your file system? Try looking at this program with `elm reactor` or some other server.');
 
 		case 2:
-			var jsonError = fact1;
-			throw new Error('Problem with the flags given to your Elm program on initialization.\n\n' + _Json_errorToString(jsonError));
+			var jsonErrorString = fact1;
+			throw new Error('Problem with the flags given to your Elm program on initialization.\n\n' + jsonErrorString);
 
 		case 3:
 			var portName = fact1;
@@ -2049,7 +2050,7 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 function _Platform_initialize(flagDecoder, args, init, update, subscriptions, stepperBuilder)
 {
 	var result = A2(_Json_run, flagDecoder, _Json_wrap(args ? args['flags'] : undefined));
-	elm$core$Result$isOk(result) || _Debug_crash(2, result.a);
+	elm$core$Result$isOk(result) || _Debug_crash(2 /**/, _Json_errorToString(result.a) /**/);
 	var managers = {};
 	result = init(result.a);
 	var model = result.a;
@@ -5873,10 +5874,6 @@ var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var author$project$PhotoGallery$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
-			case 'Search':
-				return _Utils_Tuple2(
-					model,
-					author$project$PhotoGallery$getPhotos(model.query));
 			case 'SetQuery':
 				var query = msg.a;
 				return _Utils_Tuple2(
@@ -5884,6 +5881,10 @@ var author$project$PhotoGallery$update = F2(
 						model,
 						{query: query}),
 					elm$core$Platform$Cmd$none);
+			case 'Search':
+				return _Utils_Tuple2(
+					model,
+					author$project$PhotoGallery$getPhotos(model.query));
 			default:
 				if (msg.a.$ === 'Ok') {
 					var results = msg.a.a;

@@ -18,7 +18,6 @@ type alias Model =
     { results : List SearchResult
     , initialIndex : Int
     , query : String
-    , errorMessage : Maybe String
     }
 
 
@@ -43,8 +42,6 @@ type alias PhotosUser =
 
 type Msg
     = PhotosResult (Result Http.Error (List SearchResult))
-    | SetQuery String
-    | Search
 
 
 type Error
@@ -57,7 +54,7 @@ type Error
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { query = "Dogs", results = [], initialIndex = 0, errorMessage = Nothing }, getPhotos "Dogs" )
+    ( { query = "Dogs", results = [], initialIndex = 0 }, getPhotos "Dogs" )
 
 
 
@@ -67,12 +64,6 @@ init _ =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Search ->
-            ( model, getPhotos model.query )
-
-        SetQuery query ->
-            ( { model | query = query }, Cmd.none )
-
         PhotosResult (Ok results) ->
             ( { model | results = results, query = "" }, Cmd.none )
 
