@@ -71,7 +71,7 @@ update msg model =
             ( { model | results = [], errorMessage = Just "Oops, something went wrong." }, Cmd.none )
 
 
-getPhotos : String -> Cmd Msg
+getPhotos : Int -> Cmd Msg
 getPhotos query =
     let
         url =
