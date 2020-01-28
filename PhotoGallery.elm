@@ -54,7 +54,7 @@ type Error
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { query = "Dogs", results = [], initialIndex = 0 }, getPhotos "Dogs" )
+    ( { query = "Dogs", results = [], initialIndex = 0 }, getPhoto "Dogs" )
 
 
 
@@ -71,7 +71,7 @@ update msg model =
             ( { model | results = [], errorMessage = Just "Oops, something went wrong." }, Cmd.none )
 
 
-getPhotos : Int -> Cmd Msg
+getPhotos : String -> Cmd Msg
 getPhotos query =
     let
         url =
