@@ -16,6 +16,17 @@ Then install the application-specific elm packages:
 $ elm-package install --yes
 ```
 
+Create an `Auth.elm` file in the root of the project. It should look like this:
+
+```
+module Auth exposing (token)
+
+
+token : String
+token =
+    "YourUnsplashAPITokenGoesHere"
+```
+
 Finally, get your application up and running:
 
 ```
